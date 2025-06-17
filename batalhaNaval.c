@@ -11,25 +11,21 @@ int main() {
         }
     }
 
-    // Tamanho fixo dos navios
-    int tamanhoNavio = 3;
+    int tamanhoNavio = 3;  // Tamanho fixo dos navios
+    int podeColocar = 1;   // Variável de controle
 
     // --- NAVIO HORIZONTAL ---
-    // Começa na linha 2, coluna 4
     int linhaH = 2;
     int colunaH = 4;
 
-    // Verifica se cabe no tabuleiro
     if (colunaH + tamanhoNavio <= 10) {
-        // Verifica se não tem outro navio no caminho
-        int podeColocar = 1;
+        podeColocar = 1;
         for (int i = 0; i < tamanhoNavio; i++) {
             if (tabuleiro[linhaH][colunaH + i] != 0) {
                 podeColocar = 0;
             }
         }
 
-        // Se puder, coloca o navio
         if (podeColocar == 1) {
             for (int i = 0; i < tamanhoNavio; i++) {
                 tabuleiro[linhaH][colunaH + i] = 3;
@@ -42,21 +38,17 @@ int main() {
     }
 
     // --- NAVIO VERTICAL ---
-    // Começa na linha 5, coluna 6
     int linhaV = 5;
     int colunaV = 6;
 
-    // Verifica se cabe no tabuleiro
     if (linhaV + tamanhoNavio <= 10) {
-        // Verifica se não tem outro navio no caminho
-        int podeColocar = 1;
+        podeColocar = 1;
         for (int i = 0; i < tamanhoNavio; i++) {
             if (tabuleiro[linhaV + i][colunaV] != 0) {
                 podeColocar = 0;
             }
         }
 
-        // Se puder, coloca o navio
         if (podeColocar == 1) {
             for (int i = 0; i < tamanhoNavio; i++) {
                 tabuleiro[linhaV + i][colunaV] = 3;
@@ -66,6 +58,52 @@ int main() {
         }
     } else {
         printf("Navio vertical fora dos limites!\n");
+    }
+
+    // --- NAVIO DIAGONAL PRINCIPAL ↘ (linha e coluna aumentam) ---
+    int linhaD1 = 0;
+    int colunaD1 = 0;
+
+    if (linhaD1 + tamanhoNavio <= 10 && colunaD1 + tamanhoNavio <= 10) {
+        podeColocar = 1;
+        for (int i = 0; i < tamanhoNavio; i++) {
+            if (tabuleiro[linhaD1 + i][colunaD1 + i] != 0) {
+                podeColocar = 0;
+            }
+        }
+
+        if (podeColocar == 1) {
+            for (int i = 0; i < tamanhoNavio; i++) {
+                tabuleiro[linhaD1 + i][colunaD1 + i] = 3;
+            }
+        } else {
+            printf("Não foi possível posicionar o navio diagonal ↘.\n");
+        }
+    } else {
+        printf("Navio diagonal ↘ fora dos limites!\n");
+    }
+
+    // --- NAVIO DIAGONAL SECUNDÁRIA ↙ (linha aumenta e coluna diminui) ---
+    int linhaD2 = 0;
+    int colunaD2 = 9;
+
+    if (linhaD2 + tamanhoNavio <= 10 && colunaD2 - (tamanhoNavio - 1) >= 0) {
+        podeColocar = 1;
+        for (int i = 0; i < tamanhoNavio; i++) {
+            if (tabuleiro[linhaD2 + i][colunaD2 - i] != 0) {
+                podeColocar = 0;
+            }
+        }
+
+        if (podeColocar == 1) {
+            for (int i = 0; i < tamanhoNavio; i++) {
+                tabuleiro[linhaD2 + i][colunaD2 - i] = 3;
+            }
+        } else {
+            printf("Não foi possível posicionar o navio diagonal ↙.\n");
+        }
+    } else {
+        printf("Navio diagonal ↙ fora dos limites!\n");
     }
 
     // --- EXIBINDO O TABULEIRO ---
